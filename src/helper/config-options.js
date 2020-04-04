@@ -1,6 +1,5 @@
 
 const path = require('path');
-const fs = require('fs')
 const buildPlugins = require('./build-plugins');
 
 
@@ -54,38 +53,23 @@ class ConfigOptions {
 
     parsePlugins ({ plugins = {} }) {
 
-        const result = Object.assign({}, plugins);
+        const { react = false, svg = false } = plugins;
 
-        const { react = false, svg = false, scss = false } = result;
+        this.plugins = Object.assign(plugins, {
 
-        if (react) {
-            result.babel = true;
-        }
+            babel: plugins.babel || react,
+            css: plugins.css || plugins.scss,
+            componentSvg: svg && react,
+            inlineSvg: svg && !react,
 
-        if (scss) {
-            result.css = true;
-        }
+            // development only
+            styleLoader: this.isDevelopment,
 
-        if (svg && react) {
-            result.componentSvg = true
-        }
-        if (svg && !react) {
-            result.inlineSvg = true
-        }
-
-        const productionPlugins = {
-            miniCss: true,
-            clean: true,
-            copy: fs.existsSync(this.developmentPath)
-        }
-
-        const developmentPlugins = {
-            styleLoader: true
-        }
-
-        Object.assign(result, this.ifPD(productionPlugins, developmentPlugins));
-
-        this.plugins = result;
+            // production only
+            miniCss: this.isProduction,
+            clean: plugins.clean && this.isProduction,
+            copy: plugins.copy && this.isProduction
+        });
     }
 
     buildPlugins (config) {
