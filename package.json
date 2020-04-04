@@ -1,0 +1,22 @@
+{
+  "name": "a-webpack-configs",
+  "version": "1.0.0",
+  "description": "Simple nodejs webpack configs",
+  "main": "entry/entry.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrey-brill/a-webpack-configs"
+  },
+  "author": "Andrey Brill <andrey@a-brill.com> (https://github.com/andrey-brill)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrey-brill/a-webpack-configs/issues"
+  },
+  "homepage": "https://github.com/andrey-brill/a-webpack-configs",
+  "keywords": [
+    "webpack",
+    "config",
+    "module",
+    "umd"
+  ]
+}
