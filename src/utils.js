@@ -40,15 +40,22 @@ module.exports = {
     },
 
     resolveRelativePath: (path) => {
+
+        if (path.indexOf('../') >= 0) {
+            throw new Error(`Unsupported relative path ${path} (only ./path/path supported)`);
+        }
+
         return path.startsWith('./') ? process.cwd() + path.substr(1): path;
     },
 
-    addNodePathToResolve: (config) => {
-
-        const resolve = getSetO(config, 'resolve');
-        getSetA(resolve, 'modules').push(process.env.NODE_PATH);
-
-        const resolveLoader = getSetO(config, 'resolveLoader');
-        getSetA(resolveLoader, 'modules').push(process.env.NODE_PATH);
+    setModuleResolvers: (config) => {
+        Object.assign(config, {
+            resolve: {
+                modules: ['node_modules', process.env.NODE_PATH]
+            },
+            resolveLoader: {
+                modules: ['node_modules', process.env.NODE_PATH]
+            }
+        });
     }
 };

@@ -10,8 +10,8 @@ function umd (options) {
 
     return (_env, argv) => {
 
-        if (!argv.mode || !argv.mode.length) {
-            throw new Error('Webpack mode must be defined in command args')
+        if (argv.mode !== 'development' && argv.mode !== 'production') {
+            throw new Error('Webpack mode (development or production) must be defined in command args')
         }
 
         const config = {
@@ -25,7 +25,7 @@ function umd (options) {
             },
         };
 
-        utils.addNodePathToResolve(config);
+        utils.setModuleResolvers(config);
 
         return config;
     };
