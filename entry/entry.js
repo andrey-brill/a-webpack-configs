@@ -1,7 +1,7 @@
 
-const utils = require('../src/utils.js');
-const umd = require('../src/umd.js');
+const umd = require('../src/umd/config.js');
+const spa = require('../src/spa/config.js');
 
 
-module.exports = utils.checkedMerge(umd);
+module.exports = { umd, spa };
 

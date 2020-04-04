@@ -9,6 +9,8 @@ npm i a-webpack-configs -g
 # umd || spa
 npm i webpack -g
 npm i webpack-cli -g
+npm i clean-webpack-plugin -g # to clean production folder
+npm i copy-webpack-plugin -g # to copy assets from development
 
 # spa
 npm i webpack-dev-server -g
@@ -17,24 +19,25 @@ npm i html-webpack-plugin -g
 
 # plugins
 
-# analyze
+# analyzeBundle
 npm i webpack-bundle-analyzer -g
 
-# babel || react
+# babel
 npm i babel-loader -g
 npm i @babel/core -g
 npm i @babel/plugin-proposal-class-properties -g
 npm i @babel/preset-env -g
 
-# css || scss
+# css
 npm i css-loader -g
 npm i style-loader -g
+npm i mini-css-extract-plugin -g
 
-# scss
+# scss (+css)
 npm i node-sass -g
 npm i sass-loader -g
 
-# react
+# react (+babel)
 npm i react -g
 npm i react-dom -g
 npm i @babel/preset-react -g

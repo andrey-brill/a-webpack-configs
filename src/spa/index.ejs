@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title><%= htmlWebpackPlugin.options.title %></title>
+
+        <% for (var css of htmlWebpackPlugin.options.assets.css) { %>
+            <link href="<%= css %>" rel="stylesheet">
+        <% } %>
+    </head>
+    <body>
+
+        <noscript>
+            You need to enable JavaScript to run this app.
+        </noscript>
+
+        <div id="<%= htmlWebpackPlugin.options.rootId %>">
+        </div>
+
+        <% for (var script of htmlWebpackPlugin.options.assets.scripts) { %>
+            <script src="<%= script %>"></script>
+        <% } %>
+
+    </body>
+</html>
