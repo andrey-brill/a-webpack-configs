@@ -1,12 +1,12 @@
 
-const Options = require('../helper/config-options.js');
+const ConfigOptions = require('../helper/config-options.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
-module.exports = (env, customOptions) => {
+module.exports = (env, options) => {
 
-    const options = new Options(env, customOptions);
-    const { title = 'SPA', rootId = 'root', css = [], scripts = [] } = customOptions;
+    const co = new ConfigOptions(env, options);
+    const { title = 'SPA', rootId = 'root', css = [], scripts = [] } = options;
 
     const html = new HtmlWebpackPlugin({
         title,
@@ -17,14 +17,14 @@ module.exports = (env, customOptions) => {
     });
 
     const config = {
-        mode: options.mode,
-        entry: options.entry,
+        mode: co.mode,
+        entry: co.entry,
         output: {
-            filename: options.filename,
-            path: options.path
+            filename: co.output.filename,
+            path: co.output.path
         },
         devServer: {
-            contentBase: options.path,
+            contentBase: co.output.path,
             watchContentBase: true
         },
         plugins: [
@@ -32,7 +32,7 @@ module.exports = (env, customOptions) => {
         ]
     };
 
-    options.buildPlugins(config);
+    co.buildPlugins(config);
 
     return config;
 }

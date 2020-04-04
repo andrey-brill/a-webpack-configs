@@ -1,6 +1,6 @@
 {
   "name": "a-webpack-configs",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Clean and simple to use nodejs webpack configs",
   "main": "entry/entry.js",
   "repository": {

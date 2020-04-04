@@ -10,9 +10,9 @@ module.exports = (env, options) => {
         mode: co.mode,
         entry: co.entry,
         output: {
-            filename: co.filename,
-            path: co.path,
-            library: co.library,
+            filename: co.output.filename,
+            path: co.output.path,
+            library: co.output.library,
             libraryTarget: 'umd'
         },
     };
