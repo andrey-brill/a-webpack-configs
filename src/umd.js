@@ -6,7 +6,7 @@ const utils = require('./utils.js');
 function umd (options) {
 
     const { entryPath, outputPath } = options;
-    const { name, ext } = path.parse(entry);
+    const { name, ext } = path.parse(entryPath);
 
     return (_env, argv) => {
 
