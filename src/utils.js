@@ -1,5 +1,16 @@
 
 
+function getSetO (object, key) {
+    const o = object[key];
+    return o ? o : object[key] = {};
+}
+
+function getSetA (object, key) {
+    const a = object[key];
+    return a ? a : object[key] = [];
+}
+
+
 module.exports = {
 
     fromKebabToPascalCase: (name) => {
@@ -26,6 +37,18 @@ module.exports = {
         }
 
         return result;
-    }
+    },
 
+    resolveRelativePath: (path) => {
+        return path.startsWith('./') ? process.cwd() + path.substr(1): path;
+    },
+
+    addNodePathToResolve: (config) => {
+
+        const resolve = getSetO(config, 'resolve');
+        getSetA(resolve, 'modules').push(process.env.NODE_PATH);
+
+        const resolveLoader = getSetO(config, 'resolveLoader');
+        getSetA(resolveLoader, 'modules').push(process.env.NODE_PATH);
+    }
 };
