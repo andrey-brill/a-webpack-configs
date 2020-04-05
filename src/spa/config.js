@@ -1,8 +1,9 @@
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ConfigOptions = require('../helper/config-options.js');
 const fs = require('fs');
 const path = require('path');
+
+const ConfigOptions = require('../helper/config-options.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = (env, options) => {
@@ -75,7 +76,7 @@ function resolveAssets (output, assets = [], extensionExp) {
     return result;
 }
 
-// List all files in a directory in Node.js recursively in a synchronous fashion
+// List all files (absolute path) in a directory recursively
 function allFiles (dir, result = []) {
 
     if (!fs.existsSync(dir)) {

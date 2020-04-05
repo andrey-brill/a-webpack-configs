@@ -6,7 +6,10 @@ const buildPlugins = require('./build-plugins');
 class ConfigOptions {
 
     constructor (env, options) {
+
         this.parseMode(env);
+        this.parsePath(options);
+
         this.parseOutput(options);
         this.parsePlugins(options);
     }
@@ -32,12 +35,15 @@ class ConfigOptions {
         return this.isProduction ? onProduction: onDevelopment;
     }
 
-    parseOutput ({ entryPath, productionPath, developmentPath }) {
+    parsePath ({ entryPath, productionPath, developmentPath }) {
 
-        this.entry = toAbsolutePath(entryPath);
+        this.entry = entryPath;
 
         this.productionPath = toAbsolutePath(productionPath);
         this.developmentPath = toAbsolutePath(developmentPath);
+    }
+
+    parseOutput () {
 
         const buildDir = this.ifPD('dist', 'build');
 
@@ -95,14 +101,14 @@ function fromKebabToPascalCase (name) {
     return pascalParts.join('');
 }
 
-function toAbsolutePath (path) {
+function toAbsolutePath (relativePath) {
 
-    if (path.indexOf('../') >= 0 || path.indexOf('..\\') >= 0) {
-        throw new Error(`Unsupported relative path ${path} (only ./path/path supported)`);
-    }
+    let absolutePath = path.resolve(relativePath);
+    if (/[a-zA-Z]:\\/.test(absolutePath)) {
+        // making windows path looks like unix
+        absolutePath = '/' + absolutePath[0] + absolutePath.substr(2).replace(/\\/g, '/');
+    };
 
-    const absolutePath = path.startsWith('./') || path.startsWith('.\\') ? process.cwd() + path.substr(1): path;
-    // TODO add normalization? not working when all backslashes changed to slashes
     return absolutePath;
 }
 
