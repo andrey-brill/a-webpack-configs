@@ -98,7 +98,12 @@ class ConfigOptions {
     postProcess (config) {
 
         if (this.debug) {
-            console.log(config);
+
+            console.log('config', config);
+
+            if (config.module && config.module.rules) {
+                console.log('module.rules', config.module.rules);
+            }
         }
 
     }
