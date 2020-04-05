@@ -42,7 +42,7 @@ class ConfigOptions {
         const buildDir = this.ifPD('dist', 'build');
 
         const { name } = path.parse(this.entry);
-        const filename = path.join(buildDir, `${name}${ this.ifPD('.[hash]', '') }.js`)
+        const filename = buildDir + '/' + `${name}${ this.ifPD('.[hash]', '') }.js`; // with path.join -> will generate backslashes
 
         this.output = {
             filename,
@@ -101,8 +101,9 @@ function toAbsolutePath (path) {
         throw new Error(`Unsupported relative path ${path} (only ./path/path supported)`);
     }
 
-    const absolutePath = path.startsWith('./') ? process.cwd() + path.substr(1): path;
-    return absolutePath.replace(/\\/g, '/');
+    const absolutePath = path.startsWith('./') || path.startsWith('.\\') ? process.cwd() + path.substr(1): path;
+    // TODO add normalization? not working when all backslashes changed to slashes
+    return absolutePath;
 }
 
 module.exports = ConfigOptions;

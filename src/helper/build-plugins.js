@@ -119,7 +119,7 @@ function buildPlugins (configOptions, config) {
             {
                 from: developmentPath,
                 to: productionPath,
-                test: /^((?!(build\/)).)*$/ // ignoring generated sources in development mode
+                ignore: ['**build/**'] // ignoring generated sources in development mode
             },
         ]))
     }

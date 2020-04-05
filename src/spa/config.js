@@ -63,7 +63,11 @@ function resolveAssets (output, assets = [], extensionExp) {
         }
 
         for (let file of filtered) {
-            const filePath = file.replace(output.path, '')
+
+            const filePath = file
+                .substr(output.path.length) // do not use replace (slashes can be different)
+                .replace(/\\/g, '/');
+
             result.push(filePath[0] === '/' ? filePath.substr(1) : filePath);
         }
     };
