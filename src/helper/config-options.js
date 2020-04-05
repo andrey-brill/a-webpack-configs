@@ -97,11 +97,12 @@ function fromKebabToPascalCase (name) {
 
 function toAbsolutePath (path) {
 
-    if (path.indexOf('../') >= 0) {
+    if (path.indexOf('../') >= 0 || path.indexOf('..\\') >= 0) {
         throw new Error(`Unsupported relative path ${path} (only ./path/path supported)`);
     }
 
-    return path.startsWith('./') ? process.cwd() + path.substr(1): path;
+    const absolutePath = path.startsWith('./') ? process.cwd() + path.substr(1): path;
+    return absolutePath.replace(/\\/g, '/');
 }
 
 module.exports = ConfigOptions;

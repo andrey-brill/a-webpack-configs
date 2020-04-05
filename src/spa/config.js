@@ -1,6 +1,8 @@
 
-const ConfigOptions = require('../helper/config-options.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ConfigOptions = require('../helper/config-options.js');
+const fs = require('fs');
+const path = require('path');
 
 
 module.exports = (env, options) => {
@@ -13,7 +15,10 @@ module.exports = (env, options) => {
         filename: 'index.html',
         template: __dirname + '/index.ejs',
         rootId,
-        assets: { css, scripts }
+        assets: {
+            css: resolveAssets(co.output, css, /\.css$/),
+            scripts: resolveAssets(co.output, scripts, /\.js$/)
+        }
     });
 
     const config = {
@@ -35,4 +40,54 @@ module.exports = (env, options) => {
     co.buildPlugins(config);
 
     return config;
+}
+
+
+function resolveAssets (output, assets = [], extensionExp) {
+
+    const result = [];
+
+    const files = allFiles(output.path);
+
+    for (let asset of assets) {
+
+        if (!asset.test) {
+            result.push(asset);
+            continue;
+        }
+
+        const filtered = files.filter( file => extensionExp.test(file) && asset.test(file) );
+
+        if (filtered.length === 0) {
+            throw new Error('Asset not found: ' + asset);
+        }
+
+        for (let file of filtered) {
+            const filePath = file.replace(output.path, '')
+            result.push(filePath[0] === '/' ? filePath.substr(1) : filePath);
+        }
+    };
+
+    return result;
+}
+
+// List all files in a directory in Node.js recursively in a synchronous fashion
+function allFiles (dir, result = []) {
+
+    if (!fs.existsSync(dir)) {
+        return result;
+    }
+
+    const files = fs.readdirSync(dir);
+
+    for (let file of files) {
+        if (fs.statSync(path.join(dir, file)).isDirectory()) {
+            allFiles(path.join(dir, file), result);
+        }
+        else {
+            result.push(path.join(dir, file));
+        }
+    };
+
+    return result;
 }

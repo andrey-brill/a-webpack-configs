@@ -116,7 +116,11 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.copy) {
         const CopyPlugin = require('copy-webpack-plugin');
         plugins.push(new CopyPlugin([
-            { from: developmentPath, to: productionPath },
+            {
+                from: developmentPath,
+                to: productionPath,
+                test: /^((?!(build\/)).)*$/ // ignoring generated sources in development mode
+            },
         ]))
     }
 
