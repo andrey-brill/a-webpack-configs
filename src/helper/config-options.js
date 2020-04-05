@@ -12,6 +12,8 @@ class ConfigOptions {
 
         this.parseOutput(options);
         this.parsePlugins(options);
+
+        this.debug = !!options.debug;
     }
 
     parseMode (env) {
@@ -91,6 +93,14 @@ class ConfigOptions {
         });
 
         buildPlugins(this, config);
+    }
+
+    postProcess (config) {
+
+        if (this.debug) {
+            console.log(config);
+        }
+
     }
 
 }

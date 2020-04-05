@@ -18,6 +18,7 @@ module.exports = (env, options) => {
     };
 
     co.buildPlugins(config);
+    co.postProcess(config);
 
     return config;
 }
