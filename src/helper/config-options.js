@@ -41,8 +41,8 @@ class ConfigOptions {
 
         this.entry = entryPath;
 
-        this.productionPath = toAbsolutePath(productionPath);
-        this.developmentPath = toAbsolutePath(developmentPath);
+        this.productionPath = path.resolve(productionPath);
+        this.developmentPath = path.resolve(developmentPath);
     }
 
     parseOutput () {
@@ -114,17 +114,6 @@ function fromKebabToPascalCase (name) {
     const kebabParts = name.split('-');
     const pascalParts = kebabParts.map(v => v[0].toUpperCase() + v.substr(1));
     return pascalParts.join('');
-}
-
-function toAbsolutePath (relativePath) {
-
-    let absolutePath = path.resolve(relativePath);
-    if (/[a-zA-Z]:\\/.test(absolutePath)) {
-        // making windows path looks like unix
-        absolutePath = '/' + absolutePath[0] + absolutePath.substr(2).replace(/\\/g, '/');
-    };
-
-    return absolutePath;
 }
 
 module.exports = ConfigOptions;
