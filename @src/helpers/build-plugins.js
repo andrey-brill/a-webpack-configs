@@ -132,7 +132,7 @@ function buildPlugins (configOptions, config) {
 
     if (enabledPlugins.analyzeBundle) {
         const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-        plugins.push(BundleAnalyzerPlugin);
+        plugins.push(new BundleAnalyzerPlugin());
     }
 
 }
