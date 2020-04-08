@@ -17,7 +17,7 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.babel) {
         rules.push({
             test: /\.js$/,
-            include: /@src\//,
+            include: /@src[\/\\]/,
             use: {
                 loader: 'babel-loader',
                 options: {
@@ -31,7 +31,7 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.react) {
         rules.push({
             test: /\.jsx$/,
-            include: /@src\//,
+            include: /@src[\/\\]/,
             use: {
                 loader: 'babel-loader',
                 options: {
