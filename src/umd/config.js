@@ -1,5 +1,5 @@
 
-const ConfigOptions = require('../helper/config-options.js');
+const ConfigOptions = require('../helpers/config-options.js');
 
 
 module.exports = (env, options) => {
@@ -17,8 +17,6 @@ module.exports = (env, options) => {
         },
     };
 
-    co.buildPlugins(config);
-    co.postProcess(config);
-
-    return config;
+    return co.postProcess(config);
 }
+

@@ -80,22 +80,20 @@ class ConfigOptions {
         });
     }
 
-    buildPlugins (config) {
-
-        // making possible use globally installed dev-modules
-        Object.assign(config, {
-            resolve: {
-                modules: ['node_modules', process.env.NODE_PATH]
-            },
-            resolveLoader: {
-                modules: ['node_modules', process.env.NODE_PATH]
-            }
-        });
+    postProcess (config) {
 
         buildPlugins(this, config);
-    }
 
-    postProcess (config) {
+        // making possible use globally installed modules
+        if (process.env.NODE_PATH && process.env.NODE_PATH.trim() !== '') {
+
+            const modules = ['node_modules'].concat(process.env.NODE_PATH.split(';'))
+
+            Object.assign(config, {
+                resolve: { modules },
+                resolveLoader: { modules }
+            });
+        }
 
         if (this.debug) {
 
@@ -106,6 +104,7 @@ class ConfigOptions {
             }
         }
 
+        return config;
     }
 
 }

@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ConfigOptions = require('../helper/config-options.js');
+const ConfigOptions = require('../helpers/config-options.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
@@ -38,10 +38,7 @@ module.exports = (env, options) => {
         ]
     };
 
-    co.buildPlugins(config);
-    co.postProcess(config);
-
-    return config;
+    return co.postProcess(config);
 }
 
 
