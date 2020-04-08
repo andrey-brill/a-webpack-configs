@@ -1,5 +1,7 @@
 
-const { umd, spa } = require('../entry/entry.js');
+const path = require('path');
+
+const { umd, spa } = require(path.resolve('./entry/entry.js'));
 
 
 const development = { mode: 'development' };

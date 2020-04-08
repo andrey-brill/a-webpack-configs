@@ -65,7 +65,7 @@ class ConfigOptions {
 
         this.plugins = Object.assign(plugins, {
 
-            babel: plugins.babel || react,
+            babel: plugins.babel,
             css: plugins.css || plugins.scss,
             componentSvg: svg && react,
             inlineSvg: svg && !react,
