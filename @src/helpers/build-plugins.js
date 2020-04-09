@@ -1,4 +1,6 @@
 
+// including only raw sources
+const include = /@src[\/\\]/;
 
 function buildPlugins (configOptions, config) {
 
@@ -17,7 +19,7 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.babel) {
         rules.push({
             test: /\.js$/,
-            include: /@src[\/\\]/,
+            include,
             use: {
                 loader: 'babel-loader',
                 options: {
@@ -31,7 +33,7 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.react) {
         rules.push({
             test: /\.jsx$/,
-            include: /@src[\/\\]/,
+            include,
             use: {
                 loader: 'babel-loader',
                 options: {
@@ -45,17 +47,18 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.componentSvg) {
         rules.push({
             test: /\.svg$/,
+            include,
             use: [
                 {
-                loader: 'babel-loader',
-                options: {
-                    presets: [require('@babel/preset-env'), require('@babel/preset-react')],
-                    plugins: [require('@babel/plugin-proposal-class-properties')]
-                },
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [require('@babel/preset-env'), require('@babel/preset-react')],
+                        plugins: [require('@babel/plugin-proposal-class-properties')]
+                    },
                 },
                 {
-                loader: '@svgr/webpack',
-                options: { babel: false }
+                    loader: '@svgr/webpack',
+                    options: { babel: false }
                 }
             ],
             });
@@ -64,6 +67,7 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.inlineSvg) {
         rules.push({
             test: /\.svg$/,
+            include,
             loader: 'svg-inline-loader'
         });
     }
@@ -73,6 +77,8 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.css) {
         rules.push({
             test: /\.css$/,
+            exclude: /\.m.css$/,
+            include,
             use: [
                 styleLoader,
                 'css-loader'
@@ -80,6 +86,7 @@ function buildPlugins (configOptions, config) {
         });
         rules.push({
             test: /\.m.css$/,
+            include,
             use: [
                 styleLoader,
                 { loader: 'css-loader', options: { modules: true } }
@@ -90,6 +97,8 @@ function buildPlugins (configOptions, config) {
     if (enabledPlugins.scss) {
         rules.push({
             test: /\.scss$/,
+            exclude: /\.m.scss$/,
+            include,
             use: [
                 styleLoader,
                 'css-loader',
@@ -98,6 +107,7 @@ function buildPlugins (configOptions, config) {
         });
         rules.push({
             test: /\.m.scss$/,
+            include,
             use: [
                 styleLoader,
                 { loader: 'css-loader', options: { modules: true } },
