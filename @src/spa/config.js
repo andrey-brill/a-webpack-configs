@@ -9,13 +9,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = (env, options) => {
 
     const co = new ConfigOptions(env, options);
-    const { title = 'SPA', rootId = 'root', css = [], scripts = [] } = options;
+    const {
+        title = 'SPA',
+        rootId = 'root',
+        css = [],
+        scripts = [],
+        header = '',
+        body = ''
+    } = options;
 
     const html = new HtmlWebpackPlugin({
         title,
         filename: 'index.html',
         template: __dirname + '/index.ejs',
         rootId,
+        templates: {
+            header,
+            body
+        },
         assets: {
             css: resolveAssets(co.output, css, /\.css$/),
             scripts: resolveAssets(co.output, scripts, /\.js$/)

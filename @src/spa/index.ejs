@@ -12,6 +12,8 @@
 
         <title><%= htmlWebpackPlugin.options.title %></title>
 
+        <%= htmlWebpackPlugin.options.templates.header %>
+
         <% for (var css of htmlWebpackPlugin.options.assets.css) { %>
             <link href="<%= css %>" rel="stylesheet">
         <% } %>
@@ -24,6 +26,8 @@
 
         <div id="<%= htmlWebpackPlugin.options.rootId %>">
         </div>
+
+        <%= htmlWebpackPlugin.options.templates.body %>
 
         <% for (var script of htmlWebpackPlugin.options.assets.scripts) { %>
             <script src="<%= script %>"></script>
