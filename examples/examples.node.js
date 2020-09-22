@@ -23,6 +23,7 @@ const sd = spa(development, {
     entryPath: './entry.js',
     productionPath: './prod-path',
     developmentPath: './dev-path',
+    host: 'auto', // or true or '127.0.0.1'
     plugins: {
         css: true,
         react: true,

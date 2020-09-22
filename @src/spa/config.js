@@ -1,6 +1,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const ConfigOptions = require('../helpers/config-options.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -15,7 +16,8 @@ module.exports = (env, options) => {
         css = [],
         scripts = [],
         header = '',
-        body = ''
+        body = '',
+        host
     } = options;
 
     const html = new HtmlWebpackPlugin({
@@ -33,6 +35,18 @@ module.exports = (env, options) => {
         }
     });
 
+    const devServer = {
+        contentBase: co.output.path,
+        watchContentBase: true
+    }
+
+    if (host) {
+        Object.assign(devServer, {
+            host: (host === 'auto' || host === true) ? getIPAddress() : host,
+            disableHostCheck: true
+        });
+    }
+
     const config = {
         mode: co.mode,
         entry: co.entry,
@@ -40,14 +54,11 @@ module.exports = (env, options) => {
             filename: co.output.filename,
             path: co.output.path
         },
-        devServer: {
-            contentBase: co.output.path,
-            watchContentBase: true
-        },
+        devServer,
         plugins: [
             html
         ]
-    };
+    }
 
     return co.postProcess(config);
 }
@@ -104,4 +115,20 @@ function allFiles (dir, result = []) {
     };
 
     return result;
+}
+
+function getIPAddress() {
+
+    const interfaces = os.networkInterfaces();
+    for (let devName in interfaces) {
+      const interface = interfaces[devName];
+
+      for (let i = 0; i < interface.length; i++) {
+        const alias = interface[i];
+        if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal)
+          return alias.address;
+      }
+    }
+
+    return '127.0.0.1';
 }
