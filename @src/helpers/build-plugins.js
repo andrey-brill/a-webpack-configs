@@ -137,7 +137,7 @@ function babelLoader() {
                 [
                     require('@babel/preset-env'), {
                         targets: {
-                            browsers: ['last 2 versions', 'not ie all', 'not op_mini all'],
+                            browsers: ['last 2 versions', 'not ie >= 0', 'not ie_mob >= 0'],
                             node: 'current'
                         }
                     }
