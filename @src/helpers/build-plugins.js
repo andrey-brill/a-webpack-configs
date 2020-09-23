@@ -20,13 +20,7 @@ function buildPlugins (configOptions, config) {
         rules.push({
             test: /\.js$/,
             include,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: [require('@babel/preset-env')],
-                    plugins: [require('@babel/plugin-proposal-class-properties')]
-                }
-            }
+            use: babelLoader()
         });
     }
 
@@ -34,13 +28,7 @@ function buildPlugins (configOptions, config) {
         rules.push({
             test: /\.jsx$/,
             include,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: [require('@babel/preset-env'), require('@babel/preset-react')],
-                    plugins: [require('@babel/plugin-proposal-class-properties')]
-                }
-            }
+            use: reactLoader()
         });
     }
 
@@ -49,13 +37,7 @@ function buildPlugins (configOptions, config) {
             test: /\.svg$/,
             include,
             use: [
-                {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [require('@babel/preset-env'), require('@babel/preset-react')],
-                        plugins: [require('@babel/plugin-proposal-class-properties')]
-                    },
-                },
+                reactLoader(),
                 {
                     loader: '@svgr/webpack',
                     options: { babel: false }
@@ -145,6 +127,27 @@ function buildPlugins (configOptions, config) {
         plugins.push(new BundleAnalyzerPlugin());
     }
 
+}
+
+function babelLoader() {
+    return {
+        loader: 'babel-loader',
+        options: {
+            presets: [
+                require('@babel/preset-env')
+            ],
+            plugins: [
+                require('@babel/plugin-proposal-class-properties'),
+                require('@babel/plugin-transform-async-to-generator')
+            ]
+        }
+    }
+}
+
+function reactLoader() {
+    const loader = babelLoader();
+    loader.options.presets.push(require('@babel/preset-react'));
+    return loader;
 }
 
 function getSetO (object, key) {
