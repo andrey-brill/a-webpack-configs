@@ -134,11 +134,17 @@ function babelLoader() {
         loader: 'babel-loader',
         options: {
             presets: [
-                require('@babel/preset-env')
+                [
+                    require('@babel/preset-env'), {
+                        targets: {
+                            browsers: ['last 2 versions', 'not ie all', 'not op_mini all'],
+                            node: 'current'
+                        }
+                    }
+                ]
             ],
             plugins: [
-                require('@babel/plugin-proposal-class-properties'),
-                require('@babel/plugin-transform-async-to-generator')
+                require('@babel/plugin-proposal-class-properties')
             ]
         }
     }

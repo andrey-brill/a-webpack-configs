@@ -26,7 +26,6 @@ npm i webpack-bundle-analyzer -g
 npm i babel-loader -g
 npm i @babel/core -g
 npm i @babel/plugin-proposal-class-properties -g
-npm i @babel/plugin-transform-async-to-generator -g
 npm i @babel/preset-env -g
 
 # css
