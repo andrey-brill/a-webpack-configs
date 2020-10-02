@@ -17,7 +17,8 @@ module.exports = (env, options) => {
         scripts = [],
         header = '',
         body = '',
-        host
+        host,
+        port
     } = options;
 
     const html = new HtmlWebpackPlugin({
@@ -43,7 +44,8 @@ module.exports = (env, options) => {
     if (host) {
         Object.assign(devServer, {
             host: (host === 'auto' || host === true) ? getIPAddress() : host,
-            disableHostCheck: true
+            disableHostCheck: true,
+            port: port || 9104
         });
     }
 
