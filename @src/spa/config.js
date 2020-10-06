@@ -38,15 +38,13 @@ module.exports = (env, options) => {
 
     const devServer = {
         contentBase: co.output.path,
-        watchContentBase: true
+        watchContentBase: true,
+        disableHostCheck: true,
+        port: port || 9104
     }
 
     if (host) {
-        Object.assign(devServer, {
-            host: (host === 'auto' || host === true) ? getIPAddress() : host,
-            disableHostCheck: true,
-            port: port || 9104
-        });
+        devServer.host = (host === 'auto' || host === true) ? getIPAddress() : host;
     }
 
     const config = {
