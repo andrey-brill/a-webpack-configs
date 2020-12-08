@@ -40,6 +40,7 @@ module.exports = (env, options) => {
         contentBase: co.output.path,
         watchContentBase: true,
         disableHostCheck: true,
+        historyApiFallback: true,
         port: port || 9104
     }
 
