@@ -15,7 +15,7 @@
         <%= htmlWebpackPlugin.options.templates.header %>
 
         <% for (var css of htmlWebpackPlugin.options.assets.css) { %>
-            <link href="<%= css %>" rel="stylesheet">
+            <link href="/<%= css %>" rel="stylesheet">
         <% } %>
     </head>
     <body>
@@ -30,7 +30,7 @@
         <%= htmlWebpackPlugin.options.templates.body %>
 
         <% for (var script of htmlWebpackPlugin.options.assets.scripts) { %>
-            <script src="<%= script %>"></script>
+            <script src="/<%= script %>"></script>
         <% } %>
 
     </body>
