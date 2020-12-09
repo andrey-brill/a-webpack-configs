@@ -53,7 +53,8 @@ module.exports = (env, options) => {
         entry: co.entry,
         output: {
             filename: co.output.filename,
-            path: co.output.path
+            path: co.output.path,
+            publicPath: '/' // fixed including script with as href='/build/...'
         },
         devServer,
         plugins: [
